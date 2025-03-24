@@ -1,7 +1,7 @@
 /**
- * Nome do Exercício: Cálculo de Média de Idades
+ * Nome do Exercício: Cálculo de Troco
  * 
- * Descrição: Lê o nome e idade de duas pessoas e calcula a média das idades
+ * Descrição: Calcula o troco a ser devolvido ao cliente
  * 
  */
 
@@ -15,50 +15,33 @@ function main(): void {
     }
 }
 
-interface Pessoa {
-    nome: string;
-    idade: number;
-}
-
 interface InputValues {
-    pessoa1: Pessoa;
-    pessoa2: Pessoa;
+    precoUnitario: number;
+    quantidade: number;
+    valorPago: number;
 }
 
 interface CalculationResults {
-    pessoa1: Pessoa;
-    pessoa2: Pessoa;
-    mediaIdades: number;
+    troco: number;
 }
 
 function getInputValues(): InputValues {
     return {
-        pessoa1: {
-            nome: getStringInput('Nome da primeira pessoa: '),
-            idade: getNumberInput('Idade da primeira pessoa: ')
-        },
-        pessoa2: {
-            nome: getStringInput('Nome da segunda pessoa: '),
-            idade: getNumberInput('Idade da segunda pessoa: ')
-        }
+        precoUnitario: getNumberInput('Preço unitário do produto: '),
+        quantidade: getIntInput('Quantidade comprada: '),
+        valorPago: getNumberInput('Dinheiro recebido: ')
     };
 }
 
 function calculateResults(inputs: InputValues): CalculationResults {
-    const mediaIdades = (inputs.pessoa1.idade + inputs.pessoa2.idade) / 2;
+    const valorTotal = inputs.precoUnitario * inputs.quantidade;
+    const troco = inputs.valorPago - valorTotal; // Corrigido para valorPago - valorTotal
     
-    return {
-        pessoa1: inputs.pessoa1,
-        pessoa2: inputs.pessoa2,
-        mediaIdades
-    };
+    return { troco };
 }
 
 function displayResults(results: CalculationResults): void {
-    console.log(`\nResultados:`);
-    console.log(`- ${results.pessoa1.nome}, ${results.pessoa1.idade} anos`);
-    console.log(`- ${results.pessoa2.nome}, ${results.pessoa2.idade} anos`);
-    console.log(`- Média das idades: ${results.mediaIdades.toFixed(1)} anos`);
+    console.log(`TROCO = R$ ${results.troco.toFixed(2)}`);
 }
 
 function getNumberInput(promptMessage: string): number {
@@ -71,11 +54,14 @@ function getNumberInput(promptMessage: string): number {
     return number;
 }
 
-function getStringInput(promptMessage: string): string {
+function getIntInput(promptMessage: string): number {
     const input = prompt(promptMessage);
     if (input === null || input.trim() === '') throw new Error('Entrada cancelada');
     
-    return input;
+    const number = parseInt(input);
+    if (isNaN(number)) throw new Error('Valor inválido. Digite um número inteiro.');
+    
+    return number;
 }
 
 function handleError(error: unknown): void {

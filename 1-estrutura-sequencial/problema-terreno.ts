@@ -1,19 +1,67 @@
-/*
-Problema "terreno"
-Fazer um programa para ler as medidas da largura e comprimento de um terreno retangular com uma
-casa decimal, bem como o valor do metro quadrado do terreno com duas casas decimais. Em seguida,
-o programa deve mostrar o valor da área do terreno, bem como o valor do preço do terreno, ambos com
-duas casas decimais.
-*/
+/**
+ * Nome do Exercício: Cálculo de Área e Valor de Terreno
+ * 
+ * Descrição: Calcula a área de um terreno e seu valor total baseado no preço por m²
+ * 
+ */
 
-(function () {
-    const largura: number = parseFloat(prompt('Digite a largura do terreno: ') || "0");
-    const comprimento: number = parseFloat(prompt('Digite o comprimento do terreno: ') || "0");
-    const m2: number = parseFloat(prompt('Digite o valor do metro quadrado: ') || "0");
+function main(): void {
+    try {
+        const inputValues = getInputValues();
+        const results = calculateResults(inputValues);
+        displayResults(results);
+    } catch (error) {
+        handleError(error);
+    }
+}
 
-    const area: number = largura * comprimento;
-    const valorTotal: number = area * m2;
+interface InputValues {
+    largura: number;
+    comprimento: number;
+    valorM2: number;
+}
 
-    console.log(`Área do terreno: ${area.toFixed(2)} m²`);
-    console.log(`Valor total do terreno: R$ ${valorTotal.toFixed(2)}`);
-})();
+interface CalculationResults {
+    area: number;
+    valorTotal: number;
+}
+
+function getInputValues(): InputValues {
+    return {
+        largura: getNumberInput('Digite a largura do terreno (m): '),
+        comprimento: getNumberInput('Digite o comprimento do terreno (m): '),
+        valorM2: getNumberInput('Digite o valor do metro quadrado (R$): ')
+    };
+}
+
+function calculateResults(inputs: InputValues): CalculationResults {
+    const area = inputs.largura * inputs.comprimento;
+    const valorTotal = area * inputs.valorM2;
+    
+    return { area, valorTotal };
+}
+
+function displayResults(results: CalculationResults): void {
+    console.log(`Área do terreno: ${results.area.toFixed(2)} m²`);
+    console.log(`Valor total do terreno: R$ ${results.valorTotal.toFixed(2)}`);
+}
+
+function getNumberInput(promptMessage: string): number {
+    const input = prompt(promptMessage);
+    if (input === null || input.trim() === '') throw new Error('Entrada cancelada');
+    
+    const number = parseFloat(input);
+    if (isNaN(number)) throw new Error('Valor inválido. Digite um número.');
+    
+    return number;
+}
+
+function handleError(error: unknown): void {
+    if (error instanceof Error) {
+        console.error(`Erro: ${error.message}`);
+    } else {
+        console.error('Ocorreu um erro desconhecido');
+    }
+}
+
+main();

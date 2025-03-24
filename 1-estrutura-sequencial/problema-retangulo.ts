@@ -1,23 +1,68 @@
-/*
-Problema "retangulo"
-Fazer um programa para ler as medidas da base e altura de um retângulo. Em seguida, mostrar o valor
-da área, perímetro e diagonal deste retângulo, com quatro casas decimais, conforme exemplos.
-*/
+/**
+ * Nome do Exercício: Cálculo de Retângulo
+ * 
+ * Descrição: Calcula área, perímetro e diagonal de um retângulo
+ * 
+ */
 
-(function () {
-    const base: number = parseFloat(prompt('Base do retângulo: ') || "0");
-    const altura: number = parseFloat(prompt('Altura do retângulo: ') || "0");
+function main(): void {
+    try {
+        const inputValues = getInputValues();
+        const results = calculateResults(inputValues);
+        displayResults(results);
+    } catch (error) {
+        handleError(error);
+    }
+}
 
-//(A = base * altura)
-    const area: number = base * altura;
+interface InputValues {
+    base: number;
+    altura: number;
+}
 
- //(P = 2 × (base + altura))
-    const perimetro: number = 2 * (base + altura);
+interface CalculationResults {
+    area: number;
+    perimetro: number;
+    diagonal: number;
+}
 
-//Cálculo da diagonal (D = √(base² + altura²))
-    const diagonal: number = Math.sqrt(base ** 2 + altura ** 2);
+function getInputValues(): InputValues {
+    return {
+        base: getNumberInput('Base do retângulo: '),
+        altura: getNumberInput('Altura do retângulo: ')
+    };
+}
 
-    console.log(`Área do retângulo: ${area.toFixed(2)}`);
-    console.log(`Perímetro do retângulo: ${perimetro.toFixed(2)}`);
-    console.log(`Diagonal do retângulo: ${diagonal.toFixed(2)}`);
-})();
+function calculateResults(inputs: InputValues): CalculationResults {
+    const area = inputs.base * inputs.altura;
+    const perimetro = 2 * (inputs.base + inputs.altura);
+    const diagonal = Math.sqrt(inputs.base ** 2 + inputs.altura ** 2);
+    
+    return { area, perimetro, diagonal };
+}
+
+function displayResults(results: CalculationResults): void {
+    console.log(`Área do retângulo: ${results.area.toFixed(4)}`);
+    console.log(`Perímetro do retângulo: ${results.perimetro.toFixed(4)}`);
+    console.log(`Diagonal do retângulo: ${results.diagonal.toFixed(4)}`);
+}
+
+function getNumberInput(promptMessage: string): number {
+    const input = prompt(promptMessage);
+    if (input === null || input.trim() === '') throw new Error('Entrada cancelada');
+    
+    const number = parseFloat(input);
+    if (isNaN(number)) throw new Error('Valor inválido');
+    
+    return number;
+}
+
+function handleError(error: unknown): void {
+    if (error instanceof Error) {
+        console.error(`Erro: ${error.message}`);
+    } else {
+        console.error('Ocorreu um erro desconhecido');
+    }
+}
+
+main();
