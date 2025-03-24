@@ -114,5 +114,7 @@ Este modelo busca refletir um código mais robusto e limpo, adequado para ambien
 - Aprimorar ainda mais as boas práticas no código.
 
 ---
-Este repositório está em constante evolução ✅. Sinta-se à vontade para explorar, sugerir melhorias e contribuir! 🚀
+Este repositório está em constante evolução ✅. 
+
+Sinta-se à vontade para explorar, sugerir melhorias e contribuir! 🚀
 
