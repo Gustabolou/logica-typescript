@@ -17,8 +17,11 @@ Os exercícios abrangem tanto os conceitos fundamentais como também abordam boa
 Com o tempo, estou evoluindo para uma abordagem mais profissional na implementação dos meus códigos. Isso inclui:
 
 ✅ Uso de **interfaces** para definir tipos claros e seguros.
+
 ✅ Funções bem separadas e organizadas conforme sua responsabilidade.
+
 ✅ **Tratamento de erros** com `try/catch` para lidar com situações inesperadas.
+
 ✅ Implementação de mensagens claras para o usuário.
 
 ### Exemplo de Código com Boas Práticas
